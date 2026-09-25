@@ -1,15 +1,9 @@
-import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
 export const metadata: Metadata = {
-  title: "Zoom",
-  description: "Zoom web clone",
+  title: "Zoom Workplace",
+  description: "Zoom Workplace web client",
 };
 
 export default function RootLayout({
@@ -19,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-zoom-bg text-zoom-text`}>
+      <body className="font-sans antialiased bg-white text-[#1c1c1c]">
         {children}
       </body>
     </html>

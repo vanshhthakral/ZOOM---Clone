@@ -1,17 +1,34 @@
 import random
 import re
+import sys
 from datetime import datetime
+from pathlib import Path
+
+# Add project root to sys.path so 'database' package can be imported
+BASE_DIR = Path(__file__).resolve().parent
+REPO_ROOT = BASE_DIR.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, text
 from sqlalchemy.orm import Session, joinedload
 
-from database import Base, engine, get_db
-from models import Meeting, Participant
-from schemas import JoinMeetingBody, MeetingOut, ScheduledMeetingCreate, StatusFilter
+from database import Base, engine, get_db, Meeting, Participant
 
-FRONTEND_ORIGIN = "http://localhost:3000"
+try:
+    from .schemas import JoinMeetingBody, MeetingOut, ScheduledMeetingCreate, StatusFilter
+except ImportError:
+    from schemas import JoinMeetingBody, MeetingOut, ScheduledMeetingCreate, StatusFilter
+
+
+
+
+ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+]
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,7 +42,7 @@ app = FastAPI(title="Zoom Clone API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,7 +71,7 @@ def generate_unique_code(db: Session) -> str:
 
 def build_invite_link(meeting_code: str) -> str:
     compact = normalize_code(meeting_code)
-    return f"{FRONTEND_ORIGIN}/join/{compact}"
+    return f"{ALLOWED_ORIGINS[0]}/join/{compact}"
 
 
 def get_meeting_by_code(db: Session, meeting_code: str) -> Meeting | None:

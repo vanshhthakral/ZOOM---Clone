@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         zoom: {
-          blue: "#0E71EB",
-          "blue-hover": "#0B5ED7",
+          blue: "#0B5CFF",
+          "blue-hover": "#004FE0",
           bg: "#FFFFFF",
           muted: "#F4F6F8",
           border: "#E7E9EB",
@@ -21,7 +21,17 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: [
+          "system-ui",
+          "SF Pro",
+          "Segoe UI",
+          "Almaden Sans",
+          "Roboto",
+          "Ubuntu",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
       boxShadow: {
         card: "0 1px 3px rgba(0,0,0,0.06)",
