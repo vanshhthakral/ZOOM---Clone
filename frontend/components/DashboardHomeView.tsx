@@ -19,14 +19,11 @@ interface DashboardHomeViewProps {
 export default function DashboardHomeView({
   meetings,
   loading,
-  tab,
-  onTabChange,
   onNewMeeting,
   onJoinMeeting,
   onScheduleMeeting,
   onStartMeeting,
   activeMeetingCode,
-  busy,
 }: DashboardHomeViewProps) {
   const [timeStr, setTimeStr] = useState("");
   const [dateStr, setDateStr] = useState("");
